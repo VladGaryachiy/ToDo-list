@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack:///./src/scss/src/scss/style.scss"],"names":[],"mappings":"AAAA,EACE,SAAS","file":"./css/style.bundle.css","sourcesContent":["p{\r\n  color:red;\r\n}"],"sourceRoot":""}
