@@ -6,15 +6,8 @@ const todoServive = new TodoService();
 
 let todos = JSON.parse(localStorage.getItem('object'));
 
-
-function test() {
-    console.log(1)
-}
-
-
-
-
 let todo_list = document.getElementById('todo-list');
+
 let addTodo = todos => {
 
     todoServive.getTodos();
@@ -36,12 +29,13 @@ let addTodo = todos => {
                     </span>
 
                     <button class="delete"    >
-                        Delete
+                        x
                     </button>
             
                 `;
 
             todo_list.appendChild(li);
+
 
         });
         let delBut = document.querySelectorAll('.delete');
@@ -49,6 +43,7 @@ let addTodo = todos => {
         for(let i  = 0; i < delBut.length; i++){
             delBut[i].onclick = deleteTodo;
         }
+
     }
     else{
 
@@ -65,7 +60,7 @@ let addTodo = todos => {
                     </span>
 
                     <button class="delete"  >
-                        Delete
+                        x
                     </button>
             
                 `;
@@ -94,9 +89,13 @@ addTodo(todos);
 
 
 let todo_list_form = document.getElementById('todo-list-form');
+let aa = document.getElementById('todo-list-container') ;
 
 todo_list_form.onsubmit = event => {
+
       event.preventDefault();
+
+      aa.style.display = "block";
 
       let newTodo = event.currentTarget[0].value;
 
@@ -107,6 +106,13 @@ todo_list_form.onsubmit = event => {
       addTodo(todos);
 
       event.currentTarget[0].value = '';
+
+      addButton.disabled = true;
+
+
+
+
+
 
 };
 
@@ -121,6 +127,29 @@ let deleteTodo = e => {
         addTodo(todos);
 
 };
+
+
+let text = document.getElementById('todo-list-text');
+let addButton = document.getElementById('todo-list-button');
+
+    addButton.disabled = true;
+    text.onkeyup = () => {
+            if(text.value === ''){
+                addButton.disabled = true;
+            }
+            else{
+                addButton.disabled = false;
+            }
+
+          console.dir(addButton);
+    };
+
+
+
+
+
+
+
 
 
 /*
