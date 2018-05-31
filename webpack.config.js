@@ -1,7 +1,8 @@
 const path = require('path');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const ErrorOverlayPlugin = require('error-overlay-webpack-plugin');
 
 
 module.exports = {
@@ -12,6 +13,13 @@ module.exports = {
     ],
     output: {
         filename: './js/bundle.js'
+    },
+    devServer: {
+        overlay: {
+            warnings: true,
+            errors: true
+        },
+
     },
     devtool: "source-map",
     module: {
@@ -26,6 +34,7 @@ module.exports = {
                         presets: 'env'
                     }
                 }
+
             },
             /*Настройка css*/
             {
@@ -69,7 +78,7 @@ module.exports = {
             template: "./src/html/index.html",
             filename: "./index.html"
         }),
-       /* new CopyWebpackPlugin([{
+        new CopyWebpackPlugin([{   /*переобразование всего остпльного, картинки, иконки и т.д*/
             from: './src/fonts',
             to: './fonts'
         },
@@ -78,6 +87,9 @@ module.exports = {
             from: './src/img',
             to: './img'
         }
-        ])*/
+        ],{
+            ignore: [ '*.js', '*.css' ]
+        }),
+        new ErrorOverlayPlugin()
     ]
 };
