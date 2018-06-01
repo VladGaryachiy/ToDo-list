@@ -58,6 +58,7 @@ module.exports = {
                     ]
                 })
             },
+            /*настройка html*/
             {
                 test: /\.html$/,
                 use: [

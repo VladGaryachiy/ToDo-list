@@ -12,12 +12,7 @@ let addTodo = todos => {
 
     todoServive.getTodos();
 
-
-
-
     if(!todo_list.children.length){
-
-
 
         todos.data.forEach( item => {
             let li = document.createElement('li');
@@ -35,7 +30,6 @@ let addTodo = todos => {
                 `;
 
             todo_list.appendChild(li);
-
 
         });
         let delBut = document.querySelectorAll('.delete');
@@ -84,18 +78,14 @@ let addTodo = todos => {
 
 addTodo(todos);
 
-
-
-
-
 let todo_list_form = document.getElementById('todo-list-form');
-let aa = document.getElementById('todo-list-container') ;
+let todo_list_container = document.getElementById('todo-list-container');
 
 todo_list_form.onsubmit = event => {
 
       event.preventDefault();
 
-      aa.style.display = "block";
+/*      todo_list_container.style.display = "block";*/
 
       let newTodo = event.currentTarget[0].value;
 
@@ -109,10 +99,8 @@ todo_list_form.onsubmit = event => {
 
       addButton.disabled = true;
 
-
-
-
-
+      /*check shows todo_list_container*/
+      if(todos.data.length) todo_list_container.style.display = "block";
 
 };
 
@@ -123,9 +111,10 @@ let deleteTodo = e => {
 
 
         todos = JSON.parse(localStorage.getItem('object'));
-
         addTodo(todos);
 
+        /*check shows todo_list_container*/
+        if(todo_list.children.length === 0) todo_list_container.style.display = "none";
 };
 
 
@@ -141,9 +130,11 @@ let addButton = document.getElementById('todo-list-button');
                 addButton.disabled = false;
             }
 
-          console.dir(addButton);
+      /*    console.dir(addButton);*/
     };
 
+
+/**/
 
 
 
