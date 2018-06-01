@@ -3,7 +3,6 @@ import TodoService from './todos-service';
 const todoServive = new TodoService();
 
 
-
 let todos = JSON.parse(localStorage.getItem('object'));
 
 let todo_list = document.getElementById('todo-list');
@@ -63,7 +62,6 @@ let addTodo = todos => {
 
         });
 
-
         let delBut = document.querySelectorAll('.delete');
         for(let i  = 0; i < delBut.length; i++){
             delBut[i].onclick = deleteTodo;
@@ -71,8 +69,6 @@ let addTodo = todos => {
 
 
     }
-
-
 
 };
 
@@ -84,8 +80,6 @@ let todo_list_container = document.getElementById('todo-list-container');
 todo_list_form.onsubmit = event => {
 
       event.preventDefault();
-
-/*      todo_list_container.style.display = "block";*/
 
       let newTodo = event.currentTarget[0].value;
 
@@ -99,9 +93,6 @@ todo_list_form.onsubmit = event => {
 
       addButton.disabled = true;
 
-      /*check shows todo_list_container*/
-      if(todos.data.length) todo_list_container.style.display = "block";
-
 };
 
 
@@ -113,8 +104,6 @@ let deleteTodo = e => {
         todos = JSON.parse(localStorage.getItem('object'));
         addTodo(todos);
 
-        /*check shows todo_list_container*/
-        if(todo_list.children.length === 0) todo_list_container.style.display = "none";
 };
 
 
@@ -133,17 +122,3 @@ let addButton = document.getElementById('todo-list-button');
       /*    console.dir(addButton);*/
     };
 
-
-/**/
-
-
-
-
-
-
-
-
-/*
-del.onclick = e => {
-    console.log(e);
-};*/
