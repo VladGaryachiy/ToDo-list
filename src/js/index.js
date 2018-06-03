@@ -2,7 +2,6 @@ import TodoService from './todos-service';
 
 const todoServive = new TodoService();
 
-
 let todos = JSON.parse(localStorage.getItem('object'));
 
 let todo_list = document.getElementById('todo-list');
@@ -11,8 +10,7 @@ let addTodo = todos => {
 
     todoServive.getTodos();
 
-    if(!todo_list.children.length){
-
+    todo_list.innerHTML = '' ;
         todos.data.forEach( item => {
             let li = document.createElement('li');
             li.className = "element-todo-list";
@@ -37,38 +35,6 @@ let addTodo = todos => {
             delBut[i].onclick = deleteTodo;
         }
 
-    }
-    else{
-
-        todo_list.innerHTML = '' ;
-
-        todos.data.forEach( item => {
-            let li = document.createElement('li');
-            li.className = "element-todo-list";
-            li.innerHTML = `
-        
-
-                    <span class="todo">
-                       ${item.name}
-                    </span>
-
-                    <button class="delete"  >
-                        x
-                    </button>
-            
-                `;
-
-            todo_list.appendChild(li);
-
-        });
-
-        let delBut = document.querySelectorAll('.delete');
-        for(let i  = 0; i < delBut.length; i++){
-            delBut[i].onclick = deleteTodo;
-        }
-
-
-    }
 
 };
 

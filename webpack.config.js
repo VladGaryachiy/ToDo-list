@@ -6,7 +6,7 @@ const ErrorOverlayPlugin = require('error-overlay-webpack-plugin');
 
 
 module.exports = {
-    /*в entry указаны файлы которые надо изменить*/
+    /*в entry указаны файлы которые надо переобразовать*/
     entry: [
         './src/js/index.js',
         './src/scss/style.scss'
@@ -14,7 +14,7 @@ module.exports = {
     output: {
         filename: './js/bundle.js'
     },
-    devServer: {
+    devServer: { /*overlay - удобный показ ошибки*/
         overlay: {
             warnings: true,
             errors: true
@@ -26,12 +26,12 @@ module.exports = {
         rules: [
             /*Насторйка js*/
             {
-                test: /\.js$/,
+                test: /\.js$/, /*все js файлы перегнать через babel-loader*/
                 include: path.resolve(__dirname, 'src/js'),
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        presets: 'env'
+                        presets: 'env' /*дополнительные опции которые мы можем установить*/
                     }
                 }
 
@@ -49,12 +49,12 @@ module.exports = {
                             url: false
                         }
                     },
-                        {
-                            loader: "sass-loader",
-                            options: {
-                                sourceMap: true
-                            }
+                    {
+                        loader: "sass-loader",
+                        options: {
+                            sourceMap: true
                         }
+                    }
                     ]
                 })
             },
@@ -91,6 +91,6 @@ module.exports = {
         ],{
             ignore: [ '*.js', '*.css' ]
         }),
-        new ErrorOverlayPlugin()
+      /*  new ErrorOverlayPlugin()*/
     ]
 };
