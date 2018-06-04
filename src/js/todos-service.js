@@ -78,6 +78,14 @@ class TodoService {
 
         let objStr = JSON.stringify(this.todos);
         localStorage.setItem('object',objStr);
+    }
+
+    dateSort(){
+        this.todos.data.sort((a,b) => {
+            return new Date(b.dateCreate) - new Date(a.dateCreate);
+        });
+        let objStr = JSON.stringify(this.todos);
+        localStorage.setItem('object',objStr);
 
     }
 

@@ -2,7 +2,7 @@ import TodoService from './todos-service';
 
 const todoServive = new TodoService();
 
-let todos = JSON.parse(localStorage.getItem('object'));
+let todos = null;
 
 let todo_list = document.getElementById('todo-list');
 let updateForm = document.getElementById('save');
@@ -60,7 +60,7 @@ let addTodo = todos => {
 
 };
 
-addTodo(todos);
+/*addTodo(todos);*/
 
 let todo_list_form = document.getElementById('todo-list-form');
 let todo_list_container = document.getElementById('todo-list-container');
@@ -122,10 +122,14 @@ let updateTodo = e => {
     }
 };
 
-let sortTodosByDate = () => {
-
+/*сортировка по-дате*/
+let butSortByDate = document.getElementById('butSortByDate');
+butSortByDate.onclick = () => {
+    todoServive.dateSort();
+    let sortData = JSON.parse(localStorage.getItem('object'));
+    addTodo(sortData);
 };
-
+/*сортировка по-имени*/
 
 let text = document.getElementById('todo-list-text');
 let addButton = document.getElementById('todo-list-button');
