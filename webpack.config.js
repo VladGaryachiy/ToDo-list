@@ -13,7 +13,7 @@ module.exports = {
         './src/scss/style.scss'
     ],
     output: {
-        path: path.resolve(__dirname, './doc'),
+        path: path.resolve(__dirname, './docs'),
         filename: './js/bundle.js'
     },
     devServer: { /*overlay - удобный показ ошибки*/
