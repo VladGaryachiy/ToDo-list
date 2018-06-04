@@ -58,8 +58,12 @@
       font-family: URW Chancery L, cursive;
       border-radius: 3px;
       width: 44px;
-
     }
+    .todo-list-button:active{
+      border:none;
+      outline: none;
+    }
+
     .save{
       float: left;
       position: relative;
@@ -134,8 +138,16 @@
 
       .update{
         float:right;
-        margin-top: 10px;
         order: 1;
+        background-color:white;
+        border: 1px solid lightgray;
+        font-size:14px;
+        cursor:pointer;
+        color:gray;
+        font-family: URW Chancery L, cursive;
+        border-radius: 3px;
+        height: 44px;
+        margin-right: 5px;
       }
 
       .update{
@@ -181,3 +193,6 @@ button:active{
   margin-left: 8px;
 }
 
+.update{
+
+}

@@ -101,6 +101,32 @@ class TodoService {
         localStorage.setItem('object',objStr);
     }
 
+    searchTodo(text){
+        let search_todo = {
+            data:[]
+        };
+        let all_todo = this.todos.data;
+        let req = new RegExp(text,"i");
+
+
+        this.todos.data.forEach(item => {
+                if(req.test(item.name)){
+                    search_todo.data.push(item);
+                }
+
+
+                if(search_todo){
+                    let objStr = JSON.stringify(search_todo);
+                    localStorage.setItem('object',objStr);
+                }
+                else{
+                    let objStr = JSON.stringify(this.todos);
+                    localStorage.setItem('object',objStr);
+                }
+        });
+
+
+        }
 
 
 }

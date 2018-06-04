@@ -7,17 +7,12 @@ let todos = null;
 let todo_list = document.getElementById('todo-list');
 let updateForm = document.getElementById('save');
 let add_button = document.getElementById('todo-list-button');
+let input_text = document.getElementById('todo-list-text');
 
 updateForm.style.display = "none";
 
-
-
-
-
-
 let addTodo = todos => {
 
-    todoServive.getTodos();
 
     todo_list.innerHTML = '' ;
         todos.data.forEach( item => {
@@ -56,8 +51,6 @@ let addTodo = todos => {
         for(let i  = 0; i < updateButton.length; i++){
             updateButton[i].onclick = updateTodo;
         }
-
-
 };
 
 /*addTodo(todos);*/
@@ -65,21 +58,20 @@ let addTodo = todos => {
 let todo_list_form = document.getElementById('todo-list-form');
 let todo_list_container = document.getElementById('todo-list-container');
 
+
+
 todo_list_form.onsubmit = event => {
+        event.preventDefault();
 
-      event.preventDefault();
+        let newTodo = event.currentTarget[0].value;
 
-      let newTodo = event.currentTarget[0].value;
+        todoServive.crateTodo(newTodo, todoServive.getDate());
 
-      todoServive.crateTodo(newTodo, todoServive.getDate());
+        todos = JSON.parse(localStorage.getItem('object'));
 
-      todos = JSON.parse(localStorage.getItem('object'));
+        addTodo(todos);
 
-      addTodo(todos);
-
-      event.currentTarget[0].value = '';
-
-   /*   addButton.disabled = true;*/
+        event.currentTarget[0].value = '';
 
 };
 
@@ -88,10 +80,8 @@ let deleteTodo = e => {
         let nameDeleteTodo = e.target.parentElement.children[0].textContent;
         todoServive.deleteTodo(nameDeleteTodo.trim());
 
-
         todos = JSON.parse(localStorage.getItem('object'));
         addTodo(todos);
-
 };
 
 
@@ -138,27 +128,18 @@ butSortByName.onclick = () => {
     addTodo(sortData);
 };
 
+/*поиск задач*/
 
+input_text.onkeyup = function (e) {
 
+    if(todos){
+        let text = e.srcElement.value.trim();
+        todoServive.searchTodo(text);
 
-let text = document.getElementById('todo-list-text');
-let addButton = document.getElementById('todo-list-button');
-
-/*    addButton.disabled = true;
-    text.onkeyup = () => {
-            if(text.value === ''){
-                addButton.disabled = true;
-            }
-            else{
-                addButton.disabled = false;
-            }
-
-      /!*    console.dir(addButton);*!/
+        let search_data = JSON.parse(localStorage.getItem('object'));
+        addTodo(search_data);
     };
+};
 
-    text.onchange = () => {
-        if(text.value != ''){
-            addButton.disabled = "false";
-        }
-    };*/
+
 
