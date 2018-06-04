@@ -6,7 +6,13 @@ let todos = JSON.parse(localStorage.getItem('object'));
 
 let todo_list = document.getElementById('todo-list');
 let updateForm = document.getElementById('save');
+let add_button = document.getElementById('todo-list-button');
+
 updateForm.style.display = "none";
+
+
+
+
 
 
 let addTodo = todos => {
@@ -65,7 +71,7 @@ todo_list_form.onsubmit = event => {
 
       let newTodo = event.currentTarget[0].value;
 
-      todoServive.crateTodo(newTodo);
+      todoServive.crateTodo(newTodo, todoServive.getDate());
 
       todos = JSON.parse(localStorage.getItem('object'));
 
@@ -93,50 +99,31 @@ let updateTodo = e => {
 
     let todoVal  = e.target.parentElement.childNodes[1].textContent.trim();
     let inputUpdateTodo = document.getElementById('todo-list-text');
+
+
     inputUpdateTodo.value = todoVal;
     updateForm.style.display = "block";
-
- /*   updateForm.hidden = "false";*/
-
-
-    /*update button*/
-/*    let delBut = document.querySelector('.todo-list-button');
-    delBut.classList.add('saveUpdate');
-    let saveUpdateButton = document.querySelector('.saveUpdate');
-    saveUpdateButton.textContent = "СОХРАНИТЬ";*/
-
-
-    /*update form*/
-
-   /* let addForm = document.getElementById('todo-list-form');
-    addForm.id = "updateForm";*/
-   /* addForm.classList.add('updateForm');*/
-
-
+    add_button.style.display = "none";
 
     let idTodo = e.target.dataset.id;
 
-
-
     updateForm.onclick = e => {
         let input_text = e.currentTarget.parentNode[0].value;
-        todoServive.updateTodo(idTodo,input_text);
+        todoServive.updateTodo(idTodo,input_text,todoServive.getDate());
 
         inputUpdateTodo.value = '';
         updateForm.style.display = "none";
-       /* updateForm.hidden = "true";*/
+        add_button.style.display = "block";
+
 
         todos = JSON.parse(localStorage.getItem('object'));
         addTodo(todos);
 
-        /*замена кнопки*/
-    /*    delBut.classList.remove('saveUpdate');
-        saveUpdateButton.textContent = "Добавить";*/
-        /*замена формы*/
-      /*  addForm.id = 'todo-list-form';*/
-    /*    addForm.classList.add('todo-list-form');*/
-
     }
+};
+
+let sortTodosByDate = () => {
+
 };
 
 
