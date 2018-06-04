@@ -131,6 +131,16 @@ butSortByDate.onclick = () => {
 };
 /*сортировка по-имени*/
 
+let butSortByName = document.getElementById('butSortByName');
+butSortByName.onclick = () => {
+    todoServive.nameSort();
+    let sortData = JSON.parse(localStorage.getItem('object'));
+    addTodo(sortData);
+};
+
+
+
+
 let text = document.getElementById('todo-list-text');
 let addButton = document.getElementById('todo-list-button');
 

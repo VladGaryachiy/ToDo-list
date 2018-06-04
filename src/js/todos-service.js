@@ -86,7 +86,19 @@ class TodoService {
         });
         let objStr = JSON.stringify(this.todos);
         localStorage.setItem('object',objStr);
+    }
 
+    nameSort(){
+        this.todos.data.sort((a,b) => {
+            let nameA = a.name.toLowerCase(), nameB = b.name.toLowerCase();
+            if (nameA < nameB)
+                return -1;
+            if (nameA > nameB)
+                return 1;
+        });
+
+        let objStr = JSON.stringify(this.todos);
+        localStorage.setItem('object',objStr);
     }
 
 
