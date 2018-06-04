@@ -107,6 +107,8 @@ var todoServive = new _todosService2.default();
 var todos = JSON.parse(localStorage.getItem('object'));
 
 var todo_list = document.getElementById('todo-list');
+var updateForm = document.getElementById('save');
+updateForm.style.display = "none";
 
 var addTodo = function addTodo(todos) {
 
@@ -116,14 +118,24 @@ var addTodo = function addTodo(todos) {
     todos.data.forEach(function (item) {
         var li = document.createElement('li');
         li.className = "element-todo-list";
-        li.innerHTML = '\n                       \n                    <span class="todo">\n                       ' + item.name + '\n                    </span>\n\n                    <button class="delete"    >\n                        x\n                    </button>\n            \n                ';
+
+        li.innerHTML = '\n                       \n                    <span class="todo">\n                       ' + item.name + '\n                    </span>\n                    \n                    <button class="update" data-id=' + item.id + '>\n                            \u0418\u0437\u043C\u0435\u043D\u0438\u0442\u044C \n\n                    <button class="delete"    >\n                        x\n                    </button>\n            \n                ';
 
         todo_list.appendChild(li);
     });
+
+    /*-----delete button -----*/
     var delBut = document.querySelectorAll('.delete');
 
     for (var i = 0; i < delBut.length; i++) {
         delBut[i].onclick = deleteTodo;
+    }
+
+    /*-----update button------*/
+    var updateButton = document.querySelectorAll('.update');
+
+    for (var _i = 0; _i < updateButton.length; _i++) {
+        updateButton[_i].onclick = updateTodo;
     }
 };
 
@@ -146,7 +158,7 @@ todo_list_form.onsubmit = function (event) {
 
     event.currentTarget[0].value = '';
 
-    addButton.disabled = true;
+    /*   addButton.disabled = true;*/
 };
 
 var deleteTodo = function deleteTodo(e) {
@@ -157,19 +169,69 @@ var deleteTodo = function deleteTodo(e) {
     addTodo(todos);
 };
 
+var updateTodo = function updateTodo(e) {
+
+    var todoVal = e.target.parentElement.childNodes[1].textContent.trim();
+    var inputUpdateTodo = document.getElementById('todo-list-text');
+    inputUpdateTodo.value = todoVal;
+    updateForm.style.display = "block";
+
+    /*   updateForm.hidden = "false";*/
+
+    /*update button*/
+    /*    let delBut = document.querySelector('.todo-list-button');
+        delBut.classList.add('saveUpdate');
+        let saveUpdateButton = document.querySelector('.saveUpdate');
+        saveUpdateButton.textContent = "СОХРАНИТЬ";*/
+
+    /*update form*/
+
+    /* let addForm = document.getElementById('todo-list-form');
+     addForm.id = "updateForm";*/
+    /* addForm.classList.add('updateForm');*/
+
+    var idTodo = e.target.dataset.id;
+
+    updateForm.onclick = function (e) {
+        var input_text = e.currentTarget.parentNode[0].value;
+        todoServive.updateTodo(idTodo, input_text);
+
+        inputUpdateTodo.value = '';
+        updateForm.style.display = "none";
+        /* updateForm.hidden = "true";*/
+
+        todos = JSON.parse(localStorage.getItem('object'));
+        addTodo(todos);
+
+        /*замена кнопки*/
+        /*    delBut.classList.remove('saveUpdate');
+            saveUpdateButton.textContent = "Добавить";*/
+        /*замена формы*/
+        /*  addForm.id = 'todo-list-form';*/
+        /*    addForm.classList.add('todo-list-form');*/
+    };
+};
+
 var text = document.getElementById('todo-list-text');
 var addButton = document.getElementById('todo-list-button');
 
-addButton.disabled = true;
-text.onkeyup = function () {
-    if (text.value === '') {
-        addButton.disabled = true;
-    } else {
-        addButton.disabled = false;
-    }
+/*    addButton.disabled = true;
+    text.onkeyup = () => {
+            if(text.value === ''){
+                addButton.disabled = true;
+            }
+            else{
+                addButton.disabled = false;
+            }
 
-    /*    console.dir(addButton);*/
-};
+      /!*    console.dir(addButton);*!/
+    };
+
+    text.onchange = () => {
+        if(text.value != ''){
+            addButton.disabled = "false";
+        }
+    };*/
 
 /***/ }),
 
@@ -191,9 +253,14 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+var generateId = function generateId() {
+    return Math.floor(Math.random() * 100);
+};
+
 var Todo = function Todo(name) {
     _classCallCheck(this, Todo);
 
+    this.id = generateId();
     this.name = name;
 };
 
@@ -237,6 +304,18 @@ var TodoService = function () {
 
             this.todos.data.splice(id, 1);
 
+            var objStr = JSON.stringify(this.todos);
+            localStorage.setItem('object', objStr);
+        }
+    }, {
+        key: 'updateTodo',
+        value: function updateTodo(id, name) {
+
+            var search_obj = this.todos.data.filter(function (item) {
+                return item.id === +id;
+            });
+
+            search_obj[0].name = name;
             var objStr = JSON.stringify(this.todos);
             localStorage.setItem('object', objStr);
         }

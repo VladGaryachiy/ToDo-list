@@ -23,26 +23,34 @@
   left:20%;
 
   form{
+    height: 120px;
     border: 1px solid lightgray;
     padding-top: 20px;
     padding-bottom: 20px;
     box-shadow:0px 1.4px 0px 0px lightgray;
+    height: 55px;
 
     input{
+      float: left;
       height: 40px;
       width: 70%;
+      display: inline-block;
       font-size: 23px;
       border: 1px solid lightgray;
       padding-left: 6px;
       background: #f8f8f8;
       border-radius: 3px;
-      font-family: URW Chancery L, cursive
+      font-family: URW Chancery L, cursive;
+      position: relative;
+      left:2%;
 
     }
-    button{
+    .todo-list-button{
       position: relative;
+      left: 5%;
+      float: left;
+      display: inline-block;
       height: 44px;
-      top: -3px;
       background-color:white;
       border: 1px solid lightgray;
       font-size:14px;
@@ -50,8 +58,35 @@
       color:gray;
       font-family: URW Chancery L, cursive;
       border-radius: 3px;
+      width: 44px;
 
     }
+    .save{
+      float: left;
+      position: relative;
+      left: 8%;
+      border-radius: 3px;
+      height: 44px;
+      background-color:white;
+      border: 1px solid lightgray;
+      color:gray;
+      font-family: URW Chancery L, cursive;
+      cursor: pointer;
+  /*    margin: 0;
+      right: 10%;
+      display: inline-block;
+      position: relative;
+      float: right;
+      height: 44px;
+      color:gray;
+      font-family: URW Chancery L, cursive;
+      border-radius: 3px;
+      background-color:white;
+      border: 1px solid lightgray;
+      cursor:pointer;*/
+    }
+
+
   }
 }
 
@@ -84,7 +119,7 @@
         font-size: 30px;
         font-family: URW Chancery L, cursive
       }
-      button{
+      .delete{
         width: 30px;
         height: 30px;
         float:right;
@@ -99,6 +134,27 @@
         background: none;
 
       }
+
+      .delete:active{
+        border:none;
+        outline: none;
+      }
+
+      .update{
+        position: relative;
+        left: 27%;
+        margin-top: 10px;
+      }
+
+      .update{
+        cursor: pointer;
+      }
+
+      .update:active{
+        border:none;
+        outline: none;
+      }
+
     }
   }
 }
@@ -116,3 +172,4 @@ button:active{
   border:none;
   outline: none;
 }
+

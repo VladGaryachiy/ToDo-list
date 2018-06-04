@@ -6,12 +6,14 @@ const ErrorOverlayPlugin = require('error-overlay-webpack-plugin');
 
 
 module.exports = {
+
     /*в entry указаны файлы которые надо переобразовать*/
     entry: [
         './src/js/index.js',
         './src/scss/style.scss'
     ],
     output: {
+        path: path.resolve(__dirname, './doc'),
         filename: './js/bundle.js'
     },
     devServer: { /*overlay - удобный показ ошибки*/

@@ -1,5 +1,12 @@
+let generateId = () => {
+   return Math.floor(Math.random() * 100);
+};
+
+
+
 class Todo{
     constructor(name){
+        this.id = generateId();
         this.name = name;
     }
 }
@@ -43,6 +50,18 @@ class TodoService {
 
         let objStr = JSON.stringify(this.todos);
         localStorage.setItem('object',objStr);
+    }
+
+    updateTodo(id, name){
+
+        let search_obj = this.todos.data.filter(function (item) {
+           return item.id === +id;
+        });
+
+        search_obj[0].name = name;
+        let objStr = JSON.stringify(this.todos);
+        localStorage.setItem('object',objStr);
+
     }
 
 
