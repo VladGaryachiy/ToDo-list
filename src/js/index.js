@@ -54,13 +54,8 @@ let addTodo = todos => {
 
 (function () {
     todoServive.getTodos();
-
     todos = JSON.parse(localStorage.getItem('object'));
-
-    addTodo(todos);
 })();
-
-
 
 
 
@@ -81,7 +76,7 @@ todo_list_form.onsubmit = event => {
 
         todos = JSON.parse(localStorage.getItem('object'));
 
-        addTodo(todos);
+        pagination(todos);
 
         event.currentTarget[0].value = '';
 
@@ -93,7 +88,7 @@ let deleteTodo = e => {
         todoServive.deleteTodo(nameDeleteTodo.trim());
 
         todos = JSON.parse(localStorage.getItem('object'));
-        addTodo(todos);
+        pagination(todos);
 };
 
 
@@ -119,7 +114,7 @@ let updateTodo = e => {
 
 
         todos = JSON.parse(localStorage.getItem('object'));
-        addTodo(todos);
+        pagination(todos);
 
     }
 };
@@ -159,13 +154,12 @@ input_text.onkeyup = function (e) {
 
     let pagesContainer = document.getElementById('pages-container');
 
-    let numberElementPages = 3; // кол-во елементов на странице
-    let countPages = todos.data.length / numberElementPages; // кол-во страниц
-    let countData = todos.data.length;
-
-
-
         let nextPages = e => {
+
+            let numberElementPages = 3; // кол-во елементов на странице
+            let countPages = todos.data.length / numberElementPages; // кол-во страниц
+            let countData = todos.data.length; // длина массива задая
+
             let todosPaginationData = {
                 data : []
             };
@@ -198,11 +192,20 @@ input_text.onkeyup = function (e) {
 
         };
 
-        (function () {
+
+        function pagination(todos) {
+
+            let numberElementPages = 3; // кол-во елементов на странице
+            let countPages = todos.data.length / numberElementPages; // кол-во страниц
+            let countData = todos.data.length;
 
             let todosPaginationData = {
                 data : []
             };
+
+            if(pagesContainer.children.length){
+                pagesContainer.innerHTML = ''
+            }
 
             for(let i = 0; i < countPages; i++){
 
@@ -213,17 +216,17 @@ input_text.onkeyup = function (e) {
 
                 pagesContainer.appendChild(button)
             }
-          for(let i = 0 ; i < todos.data.length; i++){
+            for(let i = 0 ; i < todos.data.length; i++){
                 if( i+1 <= numberElementPages){
-                        todosPaginationData.data.push(todos.data[i])
+                    todosPaginationData.data.push(todos.data[i])
                 }
-          }
-
-          addTodo(todosPaginationData);
-        })();
+            }
 
 
+            addTodo(todosPaginationData);
+        }
 
+        pagination(todos);
 
         let buttons = document.querySelectorAll('.links-pages');
         for(let i = 0; i < buttons.length; i++){
