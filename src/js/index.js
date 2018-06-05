@@ -152,6 +152,8 @@ input_text.onkeyup = function (e) {
 
 /*create pagination*/
 
+    let pressButton = null;
+
     let pagesContainer = document.getElementById('pages-container');
 
         let nextPages = e => {
@@ -165,6 +167,8 @@ input_text.onkeyup = function (e) {
             };
 
             let numberPage = e.currentTarget.textContent.trim();
+            pressButton = numberPage;
+
 
             let from = numberElementPages * numberPage - 3;
             let to = numberElementPages * numberPage;
@@ -234,6 +238,72 @@ input_text.onkeyup = function (e) {
         }
 
 
+
+
+        let countPress = 0;
+
+        let prev = document.getElementById('prev');
+
+        prev.onclick = e => {
+
+        };
+
+
+        let next = document.getElementById('next');
+
+        next.onclick = e => {
+
+            countPress += 3;
+
+            let todosPaginationData = {
+                data : []
+            };
+
+
+
+            let numberElementPages = 3; // кол-во елементов на странице
+            let countPages = todos.data.length / numberElementPages; // кол-во страниц
+            let countData = todos.data.length; // длина массива задач
+
+            let end =   countData - countPress;
+
+         /*   if(end === 1 || 2){
+
+                for(let i = pressButton; i < countData; i++){
+                    todosPaginationData.data.push(todos.data[i]);
+                    countPress += 1
+                }
+            }
+*/
+          /*  if(countPress === countData.length){
+                e.currentTarget.disabled = 'true'
+            }
+*/
+
+
+            if(end === 1 ){
+                for(let i = countPress; i < countData.length + 3; i++){
+                    todosPaginationData.data.push(todos.data[i]);
+                    countPress += 1
+                }
+            }
+            else if(end === 2){
+                for(let i = countPress; i < countData.length; i++){
+                    todosPaginationData.data.push(todos.data[i]);
+                    countPress += 1
+                }
+            }
+            else{
+                for(let i = countPress; i < countPress + 3; i++){ /*если нету остатка то перебирать через 3*/
+                    todosPaginationData.data.push(todos.data[i]);
+
+                }
+            }
+
+
+
+             addTodo(todosPaginationData);
+        };
 
 
 
