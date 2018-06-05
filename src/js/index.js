@@ -35,7 +35,6 @@ let addTodo = todos => {
                 `;
 
             todo_list.appendChild(li);
-
         });
 
         /*-----delete button -----*/
@@ -52,6 +51,19 @@ let addTodo = todos => {
             updateButton[i].onclick = updateTodo;
         }
 };
+
+(function () {
+    todoServive.getTodos();
+
+    todos = JSON.parse(localStorage.getItem('object'));
+
+    addTodo(todos);
+})();
+
+
+
+
+
 
 /*addTodo(todos);*/
 
@@ -140,6 +152,88 @@ input_text.onkeyup = function (e) {
         addTodo(search_data);
     };
 };
+
+
+
+/*create pagination*/
+
+    let pagesContainer = document.getElementById('pages-container');
+
+    let numberElementPages = 3; // кол-во елементов на странице
+    let countPages = todos.data.length / numberElementPages; // кол-во страниц
+    let countData = todos.data.length;
+
+
+
+        let nextPages = e => {
+            let todosPaginationData = {
+                data : []
+            };
+
+            let numberPage = e.currentTarget.textContent.trim();
+
+            let from = numberElementPages * numberPage - 3;
+            let to = numberElementPages * numberPage;
+
+            if(numberPage === "1"){
+                for(let i = 0 ; i < todos.data.length; i++){
+                    if( i+1 <= numberElementPages){
+                        todosPaginationData.data.push(todos.data[i])
+                    }
+                }
+            }
+
+            else if(to > todos.data.length){
+                for(let i = from; i < todos.data.length; i++){
+                    todosPaginationData.data.push(todos.data[i]);
+                }
+            }
+            else{
+                for(let i = from; i < to; i++){
+                    todosPaginationData.data.push(todos.data[i]);
+                }
+            }
+
+            addTodo(todosPaginationData);
+
+        };
+
+        (function () {
+
+            let todosPaginationData = {
+                data : []
+            };
+
+            for(let i = 0; i < countPages; i++){
+
+                let button = document.createElement('button');
+                button.className = "link-pages";
+                button.innerHTML = `${i + 1}`;
+                button.onclick = nextPages;
+
+                pagesContainer.appendChild(button)
+            }
+          for(let i = 0 ; i < todos.data.length; i++){
+                if( i+1 <= numberElementPages){
+                        todosPaginationData.data.push(todos.data[i])
+                }
+          }
+
+          addTodo(todosPaginationData);
+        })();
+
+
+
+
+        let buttons = document.querySelectorAll('.links-pages');
+        for(let i = 0; i < buttons.length; i++){
+            buttons.onclick = nextPages;
+        }
+
+
+
+
+
 
 
 

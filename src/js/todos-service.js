@@ -18,7 +18,57 @@ class TodoService {
     constructor(){
         this.todos = {
             data: [
-
+                {
+                    id:1,
+                    name:"todo 1",
+                    dateCreate:null,
+                    dateUpdate:null
+                },
+                {
+                    id:2,
+                    name:"todo 2",
+                    dateCreate:null,
+                    dateUpdate:null
+                },
+                {
+                    id:3,
+                    name:"todo 3",
+                    dateCreate:null,
+                    dateUpdate:null
+                },
+                {
+                    id:4,
+                    name:"todo 4",
+                    dateCreate:null,
+                    dateUpdate:null
+                },
+                {
+                    id:5,
+                    name:"todo 5",
+                    dateCreate:null,
+                    dateUpdate:null
+                }
+                ,
+                {
+                    id:6,
+                    name:"todo 6",
+                    dateCreate:null,
+                    dateUpdate:null
+                }
+                ,
+                {
+                    id:7,
+                    name:"todo 7",
+                    dateCreate:null,
+                    dateUpdate:null
+                }
+                ,
+                {
+                    id:8,
+                    name:"todo 8",
+                    dateCreate:null,
+                    dateUpdate:null
+                }
             ]
         }
 
@@ -102,33 +152,28 @@ class TodoService {
     }
 
     searchTodo(text){
-        let search_todo = {
-            data:[]
-        };
-        let all_todo = this.todos.data;
-        let req = new RegExp(text,"i");
+            let search_todo = {
+                data:[]
+            };
+            let all_todo = this.todos.data;
+            let req = new RegExp(text,"i");
 
 
-        this.todos.data.forEach(item => {
-                if(req.test(item.name)){
-                    search_todo.data.push(item);
-                }
+            this.todos.data.forEach(item => {
+                    if(req.test(item.name)){
+                        search_todo.data.push(item);
+                    }
+            });
 
-
-                if(search_todo){
-                    let objStr = JSON.stringify(search_todo);
-                    localStorage.setItem('object',objStr);
-                }
-                else{
-                    let objStr = JSON.stringify(this.todos);
-                    localStorage.setItem('object',objStr);
-                }
-        });
-
-
+            if(search_todo){
+                let objStr = JSON.stringify(search_todo);
+                localStorage.setItem('object',objStr);
+            }
+            else{
+                let objStr = JSON.stringify(this.todos);
+                localStorage.setItem('object',objStr);
+            }
         }
-
-
 }
 
 export default TodoService;

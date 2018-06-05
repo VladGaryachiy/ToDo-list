@@ -196,3 +196,17 @@ button:active{
 .update{
 
 }
+
+.pagination-container{
+  display:flex;
+  flex-direction: row;
+  justify-content: space-around;
+
+}
+
+.link-pages{
+  cursor:pointer;
+}
+.link-pages ~ .link-pages{
+  margin-left: 5px;
+}
