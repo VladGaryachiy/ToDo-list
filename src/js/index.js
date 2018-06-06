@@ -83,8 +83,8 @@ todo_list_form.onsubmit = event => {
 };
 
 
-let deleteTodo = e => {
-        let nameDeleteTodo = e.target.parentElement.children[0].textContent;
+let deleteTodo = event => {
+        let nameDeleteTodo = event.target.parentElement.children[0].textContent;
         todoServive.deleteTodo(nameDeleteTodo.trim());
 
         todos = JSON.parse(localStorage.getItem('object'));
@@ -92,9 +92,9 @@ let deleteTodo = e => {
 };
 
 
-let updateTodo = e => {
+let updateTodo = event => {
 
-    let todoVal  = e.target.parentElement.childNodes[1].textContent.trim();
+    let todoVal  = event.target.parentElement.childNodes[1].textContent.trim();
     let inputUpdateTodo = document.getElementById('todo-list-text');
 
 
@@ -102,10 +102,10 @@ let updateTodo = e => {
     updateForm.style.display = "block";
     add_button.style.display = "none";
 
-    let idTodo = e.target.dataset.id;
+    let idTodo = event.target.dataset.id;
 
-    updateForm.onclick = e => {
-        let input_text = e.currentTarget.parentNode[0].value;
+    updateForm.onclick = event => {
+        let input_text = event.currentTarget.parentNode[0].value;
         todoServive.updateTodo(idTodo,input_text,todoServive.getDate());
 
         inputUpdateTodo.value = '';
@@ -137,10 +137,10 @@ butSortByName.onclick = () => {
 
 /*поиск задач*/
 
-input_text.onkeyup = function (e) {
+input_text.onkeyup = function (event) {
 
     if(todos){
-        let text = e.srcElement.value.trim();
+        let text = event.srcElement.value.trim();
         todoServive.searchTodo(text);
 
         let search_data = JSON.parse(localStorage.getItem('object'));
@@ -163,7 +163,7 @@ input_text.onkeyup = function (e) {
 
 
             /*переход по нумерованым кнопкам*/
-        let nextPages = e => {
+        let nextPages = event => {
 
             let numberElementPages = 3; // кол-во елементов на странице
             let countPages = todos.data.length / numberElementPages; // кол-во страниц
@@ -173,7 +173,7 @@ input_text.onkeyup = function (e) {
                 data : []
             };
 
-            let numberPage = e.currentTarget.textContent.trim();
+            let numberPage = event.currentTarget.textContent.trim();
             pressButton = numberPage;
 
 
@@ -261,7 +261,7 @@ input_text.onkeyup = function (e) {
 
         let prev = document.getElementById('prev');
 
-        prev.onclick = e => {
+        prev.onclick = event => {
             console.log(countPress);
 
             let numberElementPages = 3; // кол-во елементов на странице
@@ -289,13 +289,13 @@ input_text.onkeyup = function (e) {
 
 
             if(end === 1 ){
-                for(let i = countData - countPress; i < countPress; i++){
+                for(let i =  countPress - 3 ; i < countData - end; i++){
                     todosPaginationData.data.push(todos.data[i]);
 
                 }
             }
             else if(end === 2){
-                for(let i = countData - countPress; i < countPress; i++){
+                for(let i =  countPress - 3 ; i < countData - end; i++){
                     todosPaginationData.data.push(todos.data[i]);
                 }
             }
@@ -306,13 +306,11 @@ input_text.onkeyup = function (e) {
                     todosPaginationData.data.push(todos.data[i])
                 }
 
-                /*todosPaginationData = last_click;*/ /*клон списка перезаписываем в обьект с кол-вом задач на определенной странице*/
-                console.log('аклацали больше чем длина массива')
+                console.log('наклацали больше чем длина массива')
             }
             else{
                 for(let i = countPress - 3; i < countPress; i++){ /*если нету остатка то перебирать через 3*/
                     todosPaginationData.data.push(todos.data[i]);
-
                 }
             }
 
@@ -327,7 +325,7 @@ input_text.onkeyup = function (e) {
         let next = document.getElementById('next');
 
         /*кнопка дале*/
-        next.onclick = e => {
+        next.onclick = event => {
             console.log(countPress);
 
             let numberElementPages = 3; // кол-во елементов на странице
@@ -368,7 +366,7 @@ input_text.onkeyup = function (e) {
             else if(countPress >= todos.data.length){
 
                 todosPaginationData = last_click; /*клон списка перезаписываем в обьект с кол-вом задач на определенной странице*/
-                console.log('аклацали больше чем длина массива')
+                console.log('наклацали больше чем длина массива')
             }
             else{
                 for(let i = countPress; i < countPress + 3; i++){ /*если нету остатка то перебирать через 3*/
