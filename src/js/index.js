@@ -13,7 +13,6 @@ updateForm.style.display = "none";
 
 let addTodo = todos => {
 
-
     todo_list.innerHTML = '' ;
         todos.data.forEach( item => {
             let li = document.createElement('li');
@@ -152,8 +151,8 @@ input_text.onkeyup = function (event) {
 
 /*create pagination*/
 
-    let pressButton = null;
-    let countPress = 0; /*кол-во нажатий*/
+
+    let countPress = 3; /*кол-во нажатий*/
 
     let checkNextPageNumberButtonIsWorked = false;
     /*провеям отработало ли собыьие, если да то в стрелочных кнопках не добавляем 3 а только
@@ -174,7 +173,7 @@ input_text.onkeyup = function (event) {
             };
 
             let numberPage = event.currentTarget.textContent.trim();
-            pressButton = numberPage;
+          /* pressButton = numberPage;*/
 
 
             let from = numberElementPages * numberPage - 3;
@@ -201,14 +200,10 @@ input_text.onkeyup = function (event) {
 
             addTodo(todosPaginationData);
 
+            pressButton = from;
+
             checkNextPageNumberButtonIsWorked = true;
 
-            if(countPress){
-                countPress = from;
-            }
-            else{
-                countPress = from;
-            }
 
         };
 
@@ -324,6 +319,9 @@ input_text.onkeyup = function (event) {
 
         let next = document.getElementById('next');
 
+        let todosPaginationDataNextClick = {
+            data : []
+        };
         /*кнопка дале*/
         next.onclick = event => {
             console.log(countPress);
@@ -332,52 +330,66 @@ input_text.onkeyup = function (event) {
             let countPages = todos.data.length / numberElementPages; // кол-во страниц
             let countData = todos.data.length; // длина массива задач
 
-            let todosPaginationData = {
-                data : []
-            };
 
-            if(countPress === 0){
+
+          /*  if(countPress === 0){
                 countPress += 3;
             }
-            else if(checkNextPageNumberButtonIsWorked){
+            if(checkNextPageNumberButtonIsWorked){
                 countPress = countPress;
             }
-            else if(countPress){
-                countPress += 3;
-            }
-            else{
-                countPress += 3;
-            }
+*/
 
             let end =   countData - countPress;
 
 
-            if(end === 1 ){
-                for(let i = countPress; i < countData; i++){
-                    todosPaginationData.data.push(todos.data[i]);
+
+                if(countPress || !countPress){
+                    todosPaginationDataNextClick.data.length = 0;
+                    for(let i = countPress; i < countPress + 3; i++){ /*если нету остатка то перебирать через 3*/
+                        todosPaginationDataNextClick.data.push(todos.data[i]);
+                    }
+                    countPress += 3;
+                }
+
+                if(countPress > countData){
+                    end = countPress - countData;
+
+                    /*если остался 1 елемент*/
+                    if(end === 2){
+                        countPress -= 3;
+                        todosPaginationDataNextClick.data.length = 0;
+                        for(let j = countPress; j < countData; j++){
+                            todosPaginationDataNextClick.data.push(todos.data[j]);
+                        }
+
+                    }
+
+                    /*если осталось 2 елемента*/
+                    if(end === 1){
+                        countPress -= 3;
+                        todosPaginationDataNextClick.data.length = 0;
+                        for(let j = countPress  ; j < countData; j++){
+                            todosPaginationDataNextClick.data.push(todos.data[j]);
+                        }
+                    }
+
 
                 }
-            }
-            else if(end === 2){
-                for(let i = countPress; i < countData; i++){
-                    todosPaginationData.data.push(todos.data[i]);
+                if(countPress === countData){
+                    todosPaginationDataNextClick.data.length = 0;
+                    countPress -= 3;
+                    for(let j = countPress + 1; j <= countData; j++){
+                        todosPaginationDataNextClick.data.push(todos.data[j-1]);
+                    }
                 }
-            }
-            else if(countPress >= todos.data.length){
-
-                todosPaginationData = last_click; /*клон списка перезаписываем в обьект с кол-вом задач на определенной странице*/
-                console.log('наклацали больше чем длина массива')
-            }
-            else{
-                for(let i = countPress; i < countPress + 3; i++){ /*если нету остатка то перебирать через 3*/
-                    todosPaginationData.data.push(todos.data[i]);
-
-                }
-            }
 
 
-             last_click = todosPaginationData;  /*берем образец последних изминений списка и записываем в переменную*/
-             addTodo(todosPaginationData);
+
+
+
+             last_click = todosPaginationDataNextClick;  /*берем образец последних изминений списка и записываем в переменную*/
+             addTodo(todosPaginationDataNextClick);
              checkNextPageNumberButtonIsWorked = false;
         };
 
