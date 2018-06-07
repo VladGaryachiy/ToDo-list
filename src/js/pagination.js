@@ -1,20 +1,9 @@
 /*create pagination*/
 
-import Todos from './todos-data';
 import addTodo from './render';
 
-
-let todos = Todos;
-
-
 let countPress = 3; /*кол-во нажатий*/
-
-let checkNextPageNumberButtonIsWorked = false;
-/*провеям отработало ли собыьие, если да то в стрелочных кнопках не добавляем 3 а только
- начальную точку с события котороя навешано на нумерованые кнопки*/
-
 let pagesContainer = document.getElementById('pages-container');
-
 
 /*переход по нумерованым кнопкам*/
 let nextPages = event => {
@@ -65,7 +54,7 @@ let nextPages = event => {
 
 
 /*генерация цыфровых кнопок*/
-function pagination(todos) {
+function Pagination(todos) {
 
     let numberElementPages = 3; // кол-во елементов на странице
     let countPages = todos.data.length / numberElementPages; // кол-во страниц
@@ -94,19 +83,14 @@ function pagination(todos) {
         }
     }
 
+    return todosPaginationData;
 
-    addTodo(todosPaginationData);
 }
-
-pagination(todos);
 
 let buttons = document.querySelectorAll('.links-pages');
 for(let i = 0; i < buttons.length; i++){
     buttons.onclick = nextPages;
 }
-
-
-
 
 
 let prev = document.getElementById('prev');
@@ -132,46 +116,45 @@ prev.onclick = event => {
         for(let i  = countPress - 3; i < countPress; i++){
             todosPaginationDataPrevClick.data.push(todos.data[i])
         }
+
+
+
+
         countPress -= 3;
+    }
+    if(countData - countPress === 1 || countPress != 2){
+        todosPaginationDataPrevClick.data.length = 0;
+        for(let i  = 0; i < 3; i++){
+            todosPaginationDataPrevClick.data.push(todos.data[i])
+        }
+        countPress = 3;
     }
 
     if(countPress < 0 || countPress === 0){
         todosPaginationDataPrevClick.data.length = 0;
-        for(let i  = 0; i < numberElementPages; i++){
+        for(let i  = 0; i < 3; i++){
             todosPaginationDataPrevClick.data.push(todos.data[i])
         }
-        countPress = 0;
+        countPress = 3;
     }
 
     if(end === 1){
         todosPaginationDataPrevClick.data.length = 0;
-        for(let i = countData - 4 ; i < countData -1; i++){
+        for(let i = countData - 4 ; i < countData - end; i++){
             todosPaginationDataPrevClick.data.push(todos.data[i])
         }
-        countPress -= 4
+        countPress  = countData - 4;
     }
 
 
     if(end === 2){
         todosPaginationDataPrevClick.data.length = 0;
-        for(let i = countData - 5 ; i < countData -2; i++){
+        for(let i = countData - 5 ; i < countData - end; i++){
             todosPaginationDataPrevClick.data.push(todos.data[i])
         }
 
-        if(!countPress){
-            todosPaginationDataPrevClick.data.length = 0;
-            for(let i = 0 ; i < numberElementPages; i++){
-                todosPaginationDataPrevClick.data.push(todos.data[i])
-            }
-        }
-
-        countPress === 0 ? countPress = 0 : countPress -= 5
-
+        countPress = countData - 5;
     }
-
-
-
-
 
 
     addTodo(todosPaginationDataPrevClick);
@@ -207,34 +190,33 @@ next.onclick = event => {
 
         /*если остался 1 елемент*/
         if(end === 2){
-            countPress -= 3;
+
             todosPaginationDataNextClick.data.length = 0;
-            for(let j = countPress; j < countData; j++){
+            for(let j = countData - 1; j < countData; j++){
                 todosPaginationDataNextClick.data.push(todos.data[j]);
             }
+            countPress -= countData;
 
         }
 
         /*если осталось 2 елемента*/
         if(end === 1){
-            countPress -= 3;
             todosPaginationDataNextClick.data.length = 0;
-            for(let j = countPress  ; j < countData; j++){
+            for(let j = countData - 2  ; j < countData; j++){
                 todosPaginationDataNextClick.data.push(todos.data[j]);
             }
+            countPress -= countData;
         }
     }
     if(countPress === countData){
-        todosPaginationDataNextClick.data.length = 0;
-        countPress -= 3;
-        for(let j = countPress + 1; j <= countData; j++){
-            todosPaginationDataNextClick.data.push(todos.data[j-1]);
-        }
+        countPress = countData
+
     }
+
 
 
     addTodo(todosPaginationDataNextClick);
 };
 
 
-export default pagination;
+export default Pagination;

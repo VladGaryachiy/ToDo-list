@@ -1,6 +1,6 @@
 import pagination from "./pagination";
 import TodoService from "./todos-service";
-import Todos from "./todos-data";
+import {Todos} from "./localStorage";
 import addTodo from './render';
 
 
@@ -9,111 +9,60 @@ const todoServive = new TodoService();
 let todos = Todos;
 
 
-
-
-
+let updateForm = document.getElementById('save');
+let inputUpdateTodo = document.getElementById('todo-list-text');
+let add_button = document.getElementById('todo-list-button');
 
 /*создать задачу*/
 
  let createNewTodo = event => {
-
     event.preventDefault();
-
     let newTodo = event.currentTarget[0].value;
-
-    todoServive.crateTodo(newTodo, todoServive.getDate());
-
-    todos = JSON.parse(localStorage.getItem('object'));
-
-    pagination(todos);
-
     event.currentTarget[0].value = '';
-
+    return newTodo;
 };
-
-
-
 
 /*удалить задачу*/
 
-
-
-let deleteTodo = event => {
+let clearTodo = event => {
     let nameDeleteTodo = event.target.parentElement.children[0].textContent;
-    todoServive.deleteTodo(nameDeleteTodo.trim());
-
-    todos = JSON.parse(localStorage.getItem('object'));
-    pagination(todos);
+    return nameDeleteTodo.trim();
 };
 
-
-
 /*изменить задачу*/
-
-
-
-const updateTodo = event => {
-    let updateForm = document.getElementById('save');
+let idTodo = null;
+let updateTodos = event => {
     let todoVal  = event.target.parentElement.childNodes[1].textContent.trim();
-    let inputUpdateTodo = document.getElementById('todo-list-text');
-    let add_button = document.getElementById('todo-list-button');
-
     inputUpdateTodo.value = todoVal;
     updateForm.style.display = "block";
     add_button.style.display = "none";
-
-    let idTodo = event.target.dataset.id;
-
-    updateForm.onclick = event => {
-        let input_text = event.currentTarget.parentNode[0].value;
-        todoServive.updateTodo(idTodo,input_text,todoServive.getDate());
-
-        inputUpdateTodo.value = '';
-        updateForm.style.display = "none";
-        add_button.style.display = "block";
-
-
-        todos = JSON.parse(localStorage.getItem('object'));
-        pagination(todos);
-
-    }
+    idTodo = event.target.dataset.id;
 };
 
+/*охранить изминения*/
+let saveChange = event => {
+    let input_text = event.currentTarget.parentNode[0].value;
 
+    inputUpdateTodo.value = '';
+    updateForm.style.display = "none";
+    add_button.style.display = "block";
 
+    let data = [];
+    data[0] = idTodo;
+    data[1] = input_text;
 
-/*сортировка задач создания по-дате*/
+    return data;
 
-const sortTodosByDate = () => {
-    todoServive.dateSort();
-    let sortData = JSON.parse(localStorage.getItem('object'));
-    addTodo(sortData);
 };
-
-
-
-/*сортировка задач по-имени*/
-
-const sortTodosByName = () => {
-    todoServive.nameSort();
-    let sortData = JSON.parse(localStorage.getItem('object'));
-    addTodo(sortData);
-};
-
-
 
 /*поиск задач*/
 
-const searchTodosInInput = event => {
-
+let searchTodosInInput = event => {
     if(todos){
         let text = event.srcElement.value.trim();
-        todoServive.searchTodo(text);
-
-        let search_data = JSON.parse(localStorage.getItem('object'));
-        addTodo(search_data);
+        return text;
     };
 };
 
 
-export {createNewTodo, deleteTodo, updateTodo, sortTodosByDate, sortTodosByName, searchTodosInInput}
+export {createNewTodo, clearTodo, updateTodos, saveChange, searchTodosInInput}

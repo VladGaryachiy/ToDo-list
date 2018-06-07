@@ -1,4 +1,4 @@
-import {deleteTodo,updateTodo} from './view-manipulation';
+
 
 
 
@@ -30,19 +30,6 @@ let addTodo = todos => {
         todo_list.appendChild(li);
     });
 
-    /*-----delete button -----*/
-    let delBut = document.querySelectorAll('.delete');
-
-    for(let i  = 0; i < delBut.length; i++){
-        delBut[i].onclick = deleteTodo;
-    }
-
-    /*-----update button------*/
-    let updateButton = document.querySelectorAll('.update');
-
-    for(let i  = 0; i < updateButton.length; i++){
-        updateButton[i].onclick = updateTodo;
-    }
 };
 
 

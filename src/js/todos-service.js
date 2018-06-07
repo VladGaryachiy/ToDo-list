@@ -1,6 +1,7 @@
-import Todos from './todos-data';
+import {Todos} from './localStorage';
+import {setLocalStorage, getLocalStorage, setSearchTodos} from "./localStorage";
 
-const todos = Todos;
+let todos = Todos;
 
 
 let generateId = () => {
@@ -21,20 +22,12 @@ class Todo{
 
 class TodoService {
     constructor(){
-      /*  this.todos = {
-            data: [
-
-            ]
-        }*/
-
-
     }
 
     getDate(){
         let date = new Date();
 
         let result = null;
-
         let year = date.getFullYear();
         let month = date.getMonth();
         let day = date.getDay();
@@ -51,11 +44,16 @@ class TodoService {
     }
 
     crateTodo(name,date){
-        let todo = new Todo(name,date);
-        todos.data.push(todo);
 
-        let objStr = JSON.stringify(todos);
-        localStorage.setItem('object',objStr);
+        if(!name){
+            alert('Задача не добавлена!')
+        }
+        if(name){
+            let todo = new Todo(name,date);
+            todos.data.push(todo);
+        }
+        setLocalStorage(todos); /*записали в localStorage*/
+        getLocalStorage(); /*добавили изминения в обьект TODOS*/
     }
 
     deleteTodo(name){
@@ -68,8 +66,8 @@ class TodoService {
 
         todos.data.splice(id,1);
 
-        let objStr = JSON.stringify(todos);
-        localStorage.setItem('object',objStr);
+        setLocalStorage(todos); /*записали в localStorage*/
+        getLocalStorage(); /*добавили изминения в обьект TODOS*/
     }
 
     updateTodo(id, name, date){
@@ -81,16 +79,17 @@ class TodoService {
         search_obj[0].name = name ;
         search_obj[0].dateUpdate = date;
 
-        let objStr = JSON.stringify(todos);
-        localStorage.setItem('object',objStr);
+        setLocalStorage(todos); /*записали в localStorage*/
+        getLocalStorage(); /*добавили изминения в обьект TODOS*/
     }
 
     dateSort(){
         todos.data.sort((a,b) => {
             return new Date(b.dateCreate) - new Date(a.dateCreate);
         });
-        let objStr = JSON.stringify(todos);
-        localStorage.setItem('object',objStr);
+
+        setLocalStorage(todos); /*записали в localStorage*/
+        getLocalStorage(); /*добавили изминения в обьект TODOS*/
     }
 
     nameSort(){
@@ -102,8 +101,8 @@ class TodoService {
                 return 1;
         });
 
-        let objStr = JSON.stringify(todos);
-        localStorage.setItem('object',objStr);
+        setLocalStorage(todos); /*записали в localStorage*/
+        getLocalStorage(); /*добавили изминения в обьект TODOS*/
     }
 
     searchTodo(text){
@@ -119,14 +118,11 @@ class TodoService {
                         search_todo.data.push(item);
                     }
             });
-
             if(search_todo){
-                let objStr = JSON.stringify(search_todo);
-                localStorage.setItem('object',objStr);
+                return search_todo
             }
             else{
-                let objStr = JSON.stringify(todos);
-                localStorage.setItem('object',objStr);
+                return todos
             }
         }
 }
