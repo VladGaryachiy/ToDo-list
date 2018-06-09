@@ -5,14 +5,16 @@
 let todo_list = document.getElementById('todo-list');
 
 
-let addTodo = todos => {
+let addTodo = (todos, elementsVisible) => {
 
-    todo_list.innerHTML = '' ;
-    todos.data.forEach( item => {
-        let li = document.createElement('li');
-        li.className = "element-todo-list";
+        if(todos.data.length){
 
-        li.innerHTML = `
+            todo_list.innerHTML = '' ;
+            todos.data.forEach( item => {
+                let li = document.createElement('li');
+                li.className = "element-todo-list";
+
+                li.innerHTML = `
                        
                     <span class="todo">
                        ${item.name}
@@ -27,8 +29,71 @@ let addTodo = todos => {
             
                 `;
 
-        todo_list.appendChild(li);
-    });
+                todo_list.appendChild(li);
+            });
+
+            /*у первых 3 display: block а у остальных none*/
+            if(todos.data.length <= 3 || todos.data.length > 3){
+                for(let i = 0; i < todos.data.length; i++){
+                    if( i < 3 ) {
+                        todo_list.children[i].style.display = "flex"
+                    }
+                }
+            }
+
+            if(elementsVisible){
+                if(elementsVisible.length === 1){
+                 for(let j = 0; j < todos.data.length; j++){
+                     if(elementsVisible[0] === j){
+                         todo_list.children[j].style.display = 'flex'
+                     }
+                     else{
+                         todo_list.children[j].style.display = 'none'
+                     }
+                 }
+                }
+                if(elementsVisible.length === 2){
+                    for(let j = 0; j < todos.data.length; j++){
+                        if(elementsVisible[0] === j || elementsVisible[1] === j){
+                            todo_list.children[j].style.display = 'flex'
+                        }
+                        else{
+                            todo_list.children[j].style.display = 'none'
+                        }
+                    }
+                }
+                if(elementsVisible.length === 3){
+                    for(let j = 0; j < todos.data.length; j++){
+                        if(elementsVisible[0] === j || elementsVisible[1] === j || elementsVisible[2] === j){
+                            todo_list.children[j].style.display = 'flex'
+                        }
+                        else{
+                            todo_list.children[j].style.display = 'none'
+                        }
+                    }
+                }
+
+            }
+
+        }
+        if(!todos.data.length){
+            todo_list.innerHTML = '';
+        }
+/*
+
+    if(elementsVisible.length === 1){
+        todo_list.children[0].style.display = "block"
+    }
+    if(elementsVisible.length === 2){
+        todo_list.children[0].style.display = "block";
+        todo_list.children[1].style.display = "block";
+    }
+    if(elementsVisible.length === 3){
+        todo_list.children[0].style.display = "block";
+        todo_list.children[1].style.display = "block";
+        todo_list.children[2].style.display = "block";
+    }
+*/
 
 };
 

@@ -106,25 +106,25 @@ class TodoService {
     }
 
     searchTodo(text){
-            let search_todo = {
-                data:[]
-            };
-            let all_todo = todos.data;
-            let req = new RegExp(text,"i");
+        let search_todo = {
+            data:[]
+        };
+        let all_todo = todos.data;
+        let req = new RegExp(text,"i");
 
 
-            todos.data.forEach(item => {
-                    if(req.test(item.name)){
-                        search_todo.data.push(item);
-                    }
-            });
-            if(search_todo){
-                return search_todo
+        todos.data.forEach(item => {
+            if(req.test(item.name)){
+                search_todo.data.push(item);
             }
-            else{
-                return todos
-            }
+        });
+        if(search_todo){
+            return search_todo
         }
+        else{
+            return todos
+        }
+    }
 }
 
 export default TodoService;

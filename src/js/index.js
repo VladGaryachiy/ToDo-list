@@ -7,6 +7,7 @@ import {createNewTodo, updateTodos , clearTodo, saveChange, searchTodosInInput} 
 
 let todos = Todos;
 let todoService = new TodoService();
+let pagination = new Pagination(Todos);
 
 let updateForm = document.getElementById('save'); /*сохранения*/
 let input_text = document.getElementById('todo-list-text');
@@ -17,6 +18,9 @@ let butSortByDate = document.getElementById('butSortByDate'); // кнопка с
 let butSortByName = document.getElementById('butSortByName'); // кнопка сортировки по имени
 let delBut = document.querySelectorAll('.delete');/*кнопка удаления*/
 
+let pages_container = document.getElementById('pages-container'); /*контейнер с цифр кнопками пагинации*/
+let pagination_container = document.getElementById('pagination-container');
+
 updateForm.style.display = "none"; /*кнопка сохранения изминений*/
 
     class MainModule{
@@ -26,14 +30,15 @@ updateForm.style.display = "none"; /*кнопка сохранения изми�
         createNewTodo(event){
             let createTodo = createNewTodo(event);
             todoService.crateTodo(createTodo, todoService.getDate());  /*создание задачи*/
-            let paginationData =  Pagination(todos); /*вызываем пагинацию - возвращает массив*/
-            addTodo(paginationData); /*рендерим задачи*/
+            pagination.createNumberButton();
+            addTodo(todos); /*рендерим задачи*/
         }
 
         deleteTodo(event){
+            let deleteWork = true;
             let clearName =  clearTodo(event); /*получаем елемент на который нажали*/
             todoService.deleteTodo(clearName); /*измменяем его в localStorage*/
-            Pagination(todos); /*вызываем пагинацию*/
+            pagination.createNumberButton(deleteWork);
             addTodo(todos); /* рисуем создаем задачи*/
         }
         updateTodo(event){
@@ -42,15 +47,15 @@ updateForm.style.display = "none"; /*кнопка сохранения изми�
         saveUpdate(){
             let savedTodo = saveChange(event);
             todoService.updateTodo(savedTodo[0], savedTodo[1], todoService.getDate());
-            Pagination(todos); /*вызываем пагинацию*/
+            pagination.createNumberButton();
             addTodo(todos); /*создаем задачи*/
         }
 
         searchTodo(){ /*поиск задач*/
             let text = searchTodosInInput(event);
             let searchTodos = todoService.searchTodo(text);
-            Pagination(searchTodos); /*вызываем пагинацию*/
             addTodo(searchTodos); /*создаем задачи*/
+
         }
 
         sortTodoByDate(){
@@ -62,6 +67,19 @@ updateForm.style.display = "none"; /*кнопка сохранения изми�
             todoService.nameSort();
             addTodo(todos);
         }
+
+        paginationNumberNavigation(event){
+            let elementsVisible = pagination.clickNumberButton(event);
+            addTodo(todos, elementsVisible);
+        }
+        paginationNextButton(event){
+            let elementsVisible = pagination.clickNextButton(event);
+            addTodo(todos,elementsVisible);
+        }
+
+        paginationPrevButton(event){
+
+        }
     }
 
 let mainModule = new MainModule();
@@ -69,14 +87,26 @@ let mainModule = new MainModule();
 todo_list_form.onsubmit = mainModule.createNewTodo;
 
 
+
+
 todo_list.addEventListener("DOMSubtreeModified", function() { /*прослушиваем изминение в контейнере*/
     for(let todo of todo_list.children){
         todo.children[2].onclick = mainModule.deleteTodo;
         todo.children[1].onclick = mainModule.updateTodo;
     }
-    console.dir(todo_list.children);
 });
 
+/*прослушиваем изминения в контейнере пагинации что-бы навесить кнокам которые создаються динамично обработчик события*/
+pages_container.addEventListener("DOMSubtreeModified", function() {
+    for(let number_button of pages_container.children){
+        number_button.onclick = mainModule.paginationNumberNavigation;
+    }
+});
+
+pagination_container.addEventListener("DOMSubtreeModified", function() {
+    pagination_container.children[0].onclick = mainModule.paginationPrevButton;
+    pagination_container.children[pagination_container.children.length - 1].onclick = mainModule.paginationNextButton;
+});
 
 updateForm.onclick = mainModule.saveUpdate; /*сохранить изминения*/
 
