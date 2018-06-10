@@ -65,7 +65,7 @@ let addTodo = (todos, elementsVisible) => {
                 if(elementsVisible.length === 3){
                     for(let j = 0; j < todos.data.length; j++){
                         if(elementsVisible[0] === j || elementsVisible[1] === j || elementsVisible[2] === j){
-                            todo_list.children[j].style.display = 'flex'
+                            todo_list.children[j].style.display = 'flex';
                         }
                         else{
                             todo_list.children[j].style.display = 'none'

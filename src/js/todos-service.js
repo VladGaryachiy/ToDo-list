@@ -38,10 +38,6 @@ class TodoService {
         return result = `${day} ${month} ${year} ${hour}:${minute}:${second}`
     }
 
-    getTodos(){
-        let objStr = JSON.stringify(todos);
-        localStorage.setItem('object',objStr);
-    }
 
     crateTodo(name,date){
 
@@ -84,10 +80,9 @@ class TodoService {
     }
 
     dateSort(){
-        todos.data.sort((a,b) => {
+        todos.data.sort(function(a,b){
             return new Date(b.dateCreate) - new Date(a.dateCreate);
         });
-
         setLocalStorage(todos); /*записали в localStorage*/
         getLocalStorage(); /*добавили изминения в обьект TODOS*/
     }

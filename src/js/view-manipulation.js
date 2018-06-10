@@ -1,11 +1,6 @@
-import pagination from "./pagination";
-import TodoService from "./todos-service";
+
 import {Todos} from "./localStorage";
-import addTodo from './render';
 
-
-
-const todoServive = new TodoService();
 let todos = Todos;
 
 

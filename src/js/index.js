@@ -78,7 +78,8 @@ updateForm.style.display = "none"; /*кнопка сохранения изми�
         }
 
         paginationPrevButton(event){
-
+            let elementsVisible = pagination.clickPrevButton(event);
+            addTodo(todos,elementsVisible);
         }
     }
 

@@ -23,6 +23,7 @@ class Pagination{
         this.clickNumber = null;
         this.todos = Todos;
         this.lastPage = null;
+        this.selectNumberButton = 1;
     }
 
     createNumberButton(deleteWork){
@@ -51,9 +52,11 @@ class Pagination{
 
 
     clickNumberButton(event){
+
         let numberElementPages = 3; // кол-во елементов на странице
         let numberPage = Number(event.target.textContent.trim()); /*номер страницы*/
         this.checkNumberClick = true;
+        this.selectNumberButton = numberPage;
 
         if(numberPage === 1){
             this.countClick = 0
@@ -82,17 +85,32 @@ class Pagination{
                 }
             }
         }
+
+        if(numberPage){
+            for(let i = 0; i < numberButtonPagesContainer.children.length; i++){
+                   if(i === numberPage - 1){
+                       numberButtonPagesContainer.children[i].style.backgroundColor = '#d2d2d7';
+                       numberButtonPagesContainer.children[i].style.outline = 'none';
+                   }
+                   else{
+                       numberButtonPagesContainer.children[i].style.backgroundColor = 'white';
+                   }
+            }
+        }
         return selectedTodos;
 
     }
 
     clickNextButton(event){
-        let selectedTodos = [];
+        event.currentTarget.style.outline = 'none';
 
+        let selectedTodos = [];
         if(this.countClick < this.todos.data.length){
             this.lastPage = this.todos.data.length -  this.countClick; /*остаток с последней страницы*/
         }
         this.countClick += 3; /*если нажали то добаляем 3 */
+        this.selectNumberButton += 1;
+
         let manyClick = this.countClick - this.todos.data.length;
 
         if(this.todos.data.length >  this.countClick){
@@ -101,14 +119,14 @@ class Pagination{
                 selectedTodos.push(i);
             }
         }
-        /*если осталось 2 елемента*/
+        /*если осталось 1 елемента*/
         if(this.lastPage === 1){
             selectedTodos.length = 0;
             for(let i = this.todos.data.length - 1; i < this.todos.data.length; i++ ){
                 selectedTodos.push(i);
             }
         }
-        /*елси остался 1 елемент*/
+        /*елси остался 2 елемент*/
         if(this.lastPage === 2){
             selectedTodos.length = 0;
             for(let i = this.todos.data.length - 2; i < this.todos.data.length; i++ ){
@@ -118,12 +136,29 @@ class Pagination{
 
         if(this.countClick >= this.todos.data.length){
             selectedTodos.length = 0;
-            this.countClick = this.todos.data.length;
+            this.selectNumberButton  = Math.ceil(this.todos.data.length / 3);
+            this.countClick = this.countClick - 3;
             for(let i = this.todos.data.length - this.lastPage; i < this.todos.data.length; i++ ){
                 selectedTodos.push(i);
             }
         }
 
+
+
+        /*контейнер цыфровых кнопок*/
+        let pagesN = numberButtonPagesContainer.children;
+        if(pagesN.length){
+            for(let j = 0; j < pagesN.length;j++){
+                let numberPage = Number(pagesN[j].textContent);
+                if(numberPage === this.selectNumberButton){
+                    pagesN[j].style.backgroundColor = '#d2d2d7';
+                    pagesN[j].style.outline = 'none';
+                }
+                else{
+                    pagesN[j].style.backgroundColor = 'white';
+                }
+            }
+        }
             return selectedTodos;
 
 
@@ -131,7 +166,67 @@ class Pagination{
 
     }
 
-    clickPrevButton(){
+    clickPrevButton(event){
+        event.currentTarget.style.outline = 'none';
+        let selectedTodos = [];
+
+        this.lastPage = this.todos.data.length -  this.countClick; /*остаток с последней страницы*/
+
+        if(this.countClick >= 3){
+            this.countClick -= 3; /*если нажали то добаляем 3 */
+        }
+        this.selectNumberButton -= 1;
+
+        if(this.todos.data.length >  this.countClick){
+            selectedTodos.length = 0;
+            for(let i = this.countClick ; i < this.countClick + 3; i++ ){
+                selectedTodos.push(i);
+            }
+        }
+        /*если осталось 1 елемента*/
+        if(this.lastPage === 1){
+            selectedTodos.length = 0;
+            for(let i = this.todos.data.length - 4; i < this.todos.data.length - 1; i++ ){
+                selectedTodos.push(i);
+            }
+        }
+        /*елси остался 2 елемент*/
+        if(this.lastPage === 2){
+            selectedTodos.length = 0;
+            for(let i = this.todos.data.length - 5; i < this.todos.data.length - 2; i++ ){
+                selectedTodos.push(i);
+            }
+        }
+
+        if(this.countClick <= 0){
+            selectedTodos.length = 0;
+            this.countClick = 0;
+            this.selectNumberButton = 1;
+            for(let i = this.countClick; i <  this.countClick + 3; i++ ){
+                selectedTodos.push(i);
+            }
+        }
+        let pagesN = numberButtonPagesContainer.children;
+
+        if(pagesN.length){
+            for(let j = 0; j < pagesN.length;j++){
+                let numberPage = Number(pagesN[j].textContent);
+                if(numberPage === this.selectNumberButton){
+                    pagesN[j].style.backgroundColor = '#d2d2d7';
+                    pagesN[j].style.outline = 'none';
+                }
+                else{
+                    pagesN[j].style.backgroundColor = 'white';
+                }
+            }
+        }
+
+       /* if(this.selectNumberButton === 1){
+            pagesN[0].style.backgroundColor = '#d2d2d7';
+            pagesN[0].style.outline = 'none';
+        }
+*/
+        return selectedTodos;
 
     }
 }
