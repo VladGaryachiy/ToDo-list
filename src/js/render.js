@@ -1,7 +1,4 @@
 
-
-
-
 let todo_list = document.getElementById('todo-list');
 
 
@@ -79,21 +76,6 @@ let addTodo = (todos, elementsVisible) => {
         if(!todos.data.length){
             todo_list.innerHTML = '';
         }
-/*
-
-    if(elementsVisible.length === 1){
-        todo_list.children[0].style.display = "block"
-    }
-    if(elementsVisible.length === 2){
-        todo_list.children[0].style.display = "block";
-        todo_list.children[1].style.display = "block";
-    }
-    if(elementsVisible.length === 3){
-        todo_list.children[0].style.display = "block";
-        todo_list.children[1].style.display = "block";
-        todo_list.children[2].style.display = "block";
-    }
-*/
 
 };
 

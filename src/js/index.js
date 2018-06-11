@@ -4,22 +4,23 @@ import addTodo from './render';
 import Pagination from './pagination';
 import TodoService from './todos-service'
 import {createNewTodo, updateTodos , clearTodo, saveChange, searchTodosInInput} from "./view-manipulation";
+import generateElement from './generateElement';
 
 let todos = Todos;
 let todoService = new TodoService();
 let pagination = new Pagination(Todos);
 
-let updateForm = document.getElementById('save'); /*сохранения*/
-let input_text = document.getElementById('todo-list-text');
-let todo_list_form = document.getElementById('todo-list-form');
-let todo_list = document.getElementById('todo-list'); /*контейнер с задачами ul*/
+let updateForm = generateElement('save','id'); /*сохранения*/
+let input_text = generateElement('todo-list-text','id');
+let todo_list_form = generateElement('todo-list-form','id');
+let todo_list = generateElement('todo-list','id'); /*контейнер с задачами ul*/
 
-let butSortByDate = document.getElementById('butSortByDate'); // кнопка сортировке по дате
-let butSortByName = document.getElementById('butSortByName'); // кнопка сортировки по имени
-let delBut = document.querySelectorAll('.delete');/*кнопка удаления*/
+let butSortByDate = generateElement('butSortByDate', 'id'); // кнопка сортировке по дате
+let butSortByName = generateElement('butSortByName','id'); // кнопка сортировки по имени
+let delBut = generateElement('.delete','all');/*кнопка удаления*/
 
-let pages_container = document.getElementById('pages-container'); /*контейнер с цифр кнопками пагинации*/
-let pagination_container = document.getElementById('pagination-container');
+let pages_container = generateElement('pages-container','id'); /*контейнер с цифр кнопками пагинации*/
+let pagination_container = generateElement('pagination-container','id');
 
 updateForm.style.display = "none"; /*кнопка сохранения изминений*/
 

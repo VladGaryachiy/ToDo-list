@@ -1,16 +1,16 @@
 /*create pagination*/
+import generateElement from './generateElement'
 
-
-const numberButtonPagesContainer = document.getElementById('pages-container'); /*контейнер цифровых кнопок*/
-const paginationContainer = document.getElementById('pagination-container'); /*в него будем влаживать кнопки prev and next*/
+const numberButtonPagesContainer = generateElement('pages-container','id'); /*контейнер цифровых кнопок*/
+const paginationContainer = generateElement('pagination-container','id'); /*в него будем влаживать кнопки prev and next*/
 
 
 let button = document.createElement('button');
 const prevButton = document.createElement('button');
 const nextButton = document.createElement('button');
 
-let prev_button_container = document.getElementById('prev-button-container');
-let next_button_container = document.getElementById('next-button-container');
+let prev_button_container = generateElement('prev-button-container','id');
+let next_button_container = generateElement('next-button-container','id');
 
 class Pagination{
     constructor(Todos){

@@ -1,15 +1,15 @@
 
 import {Todos} from "./localStorage";
+import generateElement from './generateElement';
 
 let todos = Todos;
 
 
-let updateForm = document.getElementById('save');
-let inputUpdateTodo = document.getElementById('todo-list-text');
-let add_button = document.getElementById('todo-list-button');
+let updateForm = generateElement('save','id');
+let inputUpdateTodo = generateElement('todo-list-text','id');
+let add_button = generateElement('todo-list-button','id');
 
 /*создать задачу*/
-
  let createNewTodo = event => {
     event.preventDefault();
     let newTodo = event.currentTarget[0].value;
