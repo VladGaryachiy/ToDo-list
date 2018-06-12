@@ -20,23 +20,23 @@ let add_button = generateElement('todo-list-button','id');
 /*удалить задачу*/
 
 let clearTodo = event => {
-    let nameDeleteTodo = event.target.parentElement.children[0].textContent;
-    return nameDeleteTodo.trim();
+    let nameDeleteTodo = event.parentElement.children[0].textContent.trim();
+    return nameDeleteTodo;
 };
 
 /*изменить задачу*/
 let idTodo = null;
 let updateTodos = event => {
-    let todoVal  = event.target.parentElement.childNodes[1].textContent.trim();
+    let todoVal  = event.parentElement.children[0].textContent.trim();
     inputUpdateTodo.value = todoVal;
     updateForm.style.display = "block";
     add_button.style.display = "none";
-    idTodo = event.target.dataset.id;
+    idTodo = event.dataset.id;
 };
 
 /*охранить изминения*/
 let saveChange = event => {
-    let input_text = event.currentTarget.parentNode[0].value;
+    let input_text = event.parentElement.children[0].value;
 
     inputUpdateTodo.value = '';
     updateForm.style.display = "none";

@@ -26,7 +26,7 @@ class Pagination{
         this.selectNumberButton = 1;
     }
 
-    createNumberButton(deleteWork){
+    createNumberButton(){
         let countPages = this.todos.data.length / 3;/*кол-во страниц*/
         let paginationTodos = [];
         this.countClick = 0;
@@ -54,7 +54,7 @@ class Pagination{
     clickNumberButton(event){
 
         let numberElementPages = 3; // кол-во елементов на странице
-        let numberPage = Number(event.target.textContent.trim()); /*номер страницы*/
+        let numberPage = Number(event.textContent.trim()); /*номер страницы*/
         this.checkNumberClick = true;
         this.selectNumberButton = numberPage;
 
@@ -102,7 +102,7 @@ class Pagination{
     }
 
     clickNextButton(event){
-        event.currentTarget.style.outline = 'none';
+        event.style.outline = 'none';
 
         let selectedTodos = [];
         if(this.countClick < this.todos.data.length){
@@ -167,7 +167,7 @@ class Pagination{
     }
 
     clickPrevButton(event){
-        event.currentTarget.style.outline = 'none';
+        event.style.outline = 'none';
         let selectedTodos = [];
 
         this.lastPage = this.todos.data.length -  this.countClick; /*остаток с последней страницы*/
@@ -220,12 +220,6 @@ class Pagination{
                 }
             }
         }
-
-       /* if(this.selectNumberButton === 1){
-            pagesN[0].style.backgroundColor = '#d2d2d7';
-            pagesN[0].style.outline = 'none';
-        }
-*/
         return selectedTodos;
 
     }
